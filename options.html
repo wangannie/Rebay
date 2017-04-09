@@ -1,0 +1,74 @@
+<html>
+  <head>
+	<meta charset="UTF-8">
+	<title>The web site of pdpdpd</title>
+	<link href="/style.css" rel="stylesheet" type="text/css" media="all">
+  </head>
+  <body>
+	Product: <input type="text" id="product" /><br>
+	Maximum price: <input type="number" id="maxprice" /><br>
+	Lowest bid: <input type="number" id="lowestbid" /><br>
+	<button id="bid">Bid on this!</button>
+	<FORM NAME="joe">
+<INPUT TYPE="hidden" NAME="burns">
+</FORM>
+
+<SCRIPT LANGUAGE="javascript">
+
+var locate = window.location
+document.joe.burns.value = locate
+
+var text = document.joe.burns.value
+
+function delineate(str)
+{
+theleft = str.indexOf("=") + 1;
+theright = str.lastIndexOf("&");
+return(str.substring(theleft, theright));
+}
+document.write("First Name is " +delineate(text));
+
+</SCRIPT> 
+	<script>
+		var config = {
+        apiKey: "AIzaSyD-9tEzl7wjVSJiMnZPMrcyse3aVv-8KMQ",
+        authDomain: "rebay-for-now.firebaseapp.com",
+        databaseURL: "https://rebay-for-now.firebaseio.com",
+        projectId: "rebay-for-now",
+        storageBucket: "rebay-for-now.appspot.com",
+        messagingSenderId: "235921736126"
+    };
+    firebase.initializeApp(config);
+
+    //ref
+    const dbRefObject = firebase.database().ref();
+    const dbRefList = dbRefObject.child('product');
+
+    // sync object changes
+    // dbRefObject.on('value', snap => {
+    //     preObject.innerText = JSON.stringify(snap.val(), null, 3);
+    // });
+    //preObject.innerText = snap.val().bName;
+    var bnamearray = [];
+    var offerarray = [];
+    var pnamearray = [];
+    var pdesarray = [];
+    var categoryarray = [];
+
+    var i = 0;
+    dbRefList.on('value', snap => {
+        snap.forEach(function(baby) {
+        console.log(baby.val().bName);
+        bnamearray[i] = baby.val().bName;
+        offerarray[i] = baby.val().bOffer;
+        pnamearray[i] = baby.val().productName;
+        pdesarray[i] = baby.val().productDescription;
+        categoryarray[i] = baby.val().productCategory;
+        i = i + 1;
+    });
+		
+		
+		
+	</script>
+  </body>
+</html>

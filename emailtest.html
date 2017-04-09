@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>Rebay</title>
+ </head>
+ <body>
+     
+   <form action="buyers.html">
+   <input type="submit" value="Buyer" />
+   </form>
+   
+   
+   <form action="" method="post">
+    <input type="submit" value="Send details to A" />
+    <input type="hidden" name="button_a" value="1" />
+    </form>
+
+    <?php
+
+    if(isset($_POST['button_a']))
+    {
+
+    $to      = 'anniedwang02@gmail.com'; //can receive notification
+
+    $subject = 'the subject';
+    $message = 'hello';
+    $headers = 'From: wangann@masonohioschools.com' . "\r\n" .
+        'Reply-To: wangann@masonohioschools.com' . "\r\n" .
+        'X-Mailer: PHP/' . phpversion();
+
+    mail($to, $subject, $message, $headers);
+
+    echo 'Email Sent.';
+    }
+\?>
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   <form action="send">
+   <input type="submit" value="send" />
+   </form>
+ </body>
+</html>

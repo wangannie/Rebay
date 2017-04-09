@@ -1,0 +1,71 @@
+<html>
+  <head>
+	<meta charset="UTF-8">
+	<title>The web site of pdpdpd</title>
+	<link href="/style.css" rel="stylesheet" type="text/css" media="all">
+  </head>
+  <body>
+    <script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    var wantedname='annietest';
+    var config = {
+        apiKey: "AIzaSyD-9tEzl7wjVSJiMnZPMrcyse3aVv-8KMQ",
+        authDomain: "rebay-for-now.firebaseapp.com",
+        databaseURL: "https://rebay-for-now.firebaseio.com",
+        projectId: "rebay-for-now",
+        storageBucket: "rebay-for-now.appspot.com",
+        messagingSenderId: "235921736126"
+    };
+    firebase.initializeApp(config);
+    
+    const dbRefObject = firebase.database().ref();
+    const dbRefList = dbRefObject.child('product');
+    
+     var bnamearray = [];
+    var offerarray = [];
+    var pnamearray = [];
+    var pdesarray = [];
+    var categoryarray = [];
+
+    var i = 0;
+    dbRefList.on('value', snap => {
+        snap.forEach(function(baby) {
+        console.log(baby.val().bName);
+        bnamearray[i] = baby.val().bName;
+        offerarray[i] = baby.val().bOffer;
+        pnamearray[i] = baby.val().productName;
+        pdesarray[i] = baby.val().productDescription;
+        categoryarray[i] = baby.val().productCategory;
+        i = i + 1;
+    });
+   
+    
+});
+
+
+</script>
+	
+	
+	
+	<h3>You're bidding on</h3>
+	<br>
+	Your name:
+	<input type="text" name="name" value="">
+	<br>
+	<br>
+	Your e-mail:
+	<input type="text" name="email" value="">
+	<br>
+	<br>
+	Your bid amount:
+	<input type="number" name="bid" value="0.00">
+	<br>
+	<br>
+	<form action="https://www.google.com">
+	<input type="submit" value="Submit Bid!" />
+
+</form>
+	
+  </body>
+</html>

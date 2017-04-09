@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Rebay</title>
+    <link href="style.css" rel="stylesheet" type="text/css" media="all">
+  </head>
+  <body>
+    <h1>All Postings</h1>
+    
+    <div id="main" style="border: none;">
+    </div>
+    
+    
+    <script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
+<script>
+   var arrImgUrls= [];
+    console.log("test");
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyD-9tEzl7wjVSJiMnZPMrcyse3aVv-8KMQ",
+        authDomain: "rebay-for-now.firebaseapp.com",
+        databaseURL: "https://rebay-for-now.firebaseio.com",
+        projectId: "rebay-for-now",
+        storageBucket: "rebay-for-now.appspot.com",
+        messagingSenderId: "235921736126"
+    };
+    firebase.initializeApp(config);
+    
+    //set div id = var id
+		
+    
+    
+    
+
+    //ref
+    const dbRefObject = firebase.database().ref();
+    const dbRefList = dbRefObject.child('product');
+
+    // sync object changes
+    // dbRefObject.on('value', snap => {
+    //     preObject.innerText = JSON.stringify(snap.val(), null, 3);
+    // });
+    //preObject.innerText = snap.val().bName;
+    var bnamearray = [];
+    var offerarray = [];
+    var pnamearray = [];
+    var pdesarray = [];
+    var categoryarray = [];
+
+    var i = 0;
+    dbRefList.on('value', snap => {
+        snap.forEach(function(baby) {
+        console.log(baby.val().bName);
+        bnamearray[i] = baby.val().bName;
+        offerarray[i] = baby.val().bOffer;
+        pnamearray[i] = baby.val().productName;
+        pdesarray[i] = baby.val().productDescription;
+        categoryarray[i] = baby.val().productCategory;
+        i = i + 1;
+    });
+
+
+    console.log(bnamearray.length);
+    for (i = 0; i < bnamearray.length; i++) {
+      console.log(i);
+        var div = document.createElement("div");
+
+        div.style.width = "100%";
+        div.style.color = "black";
+        div.setAttribute("id", i);
+        
+        var textdiv = document.createElement("div");
+        textdiv.style.display = "block";
+        textdiv.style.width = "40%";
+        textdiv.style.color = "black";
+        textdiv.style.margin = 0;
+        textdiv.style.borderStyle = "none";
+        textdiv.style.padding = "5px"
+        textdiv.innerHTML = `<a href="options.html" onclick='transferInfoToPage()'>Product: ${pnamearray[i]}</a>
+                <br>Description: ${pdesarray[i]}
+                <br>Maximum price: $${offerarray[i]}
+                <br>Category: ${categoryarray[i]}
+                <br>Name of buyer: ${bnamearray[i]}`;
+                
+        //getting image from database  
+        console.log(i);
+        var storage= firebase.storage();
+        var storageRef = firebase.storage().ref();
+        var spaceRef = storageRef.child('images/happymegan');
+        console.log(i);
+        var gsReference = storage.refFromURL('gs://rebay-for-now.appspot.com/buyerpics/'+bnamearray[i]);
+        console.log(i)
+        gsReference.getDownloadURL().then(function(url) {
+          console.log("hiiiiiiiii");
+            arrImgUrls[i]= url;
+            document.querySelector('img').src = arrImgUrls[i];
+          }).catch(function(error) {console.log("wrgntjnejthnrjnhrjhnrdjhn")});
+        
+        
+        var image = document.createElement("img");
+        image.style.margin = 0;
+        image.style.display = "block";
+        image.style.borderStyle = "none";
+        image.style.padding = "5px";
+        
+        image.setAttribute("src", arrImgUrls[i]);
+        
+        document.getElementById("main").appendChild(div);
+        div.appendChild(textdiv);
+        div.appendChild(image);
+        
+        var id = document.getElementById(i).id;
+		    sessionStorage.setItem("sent", id); 
+    
+        function transferInfoToPage () {
+          var id = document.getElementById("id").id;
+          sessionStorage.setItem("id", id); 
+          console.log(id);
+        }
+    };
+    });
+          
+        
+    </script>
+    
+  </body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>Rebay</title>
+ </head>
+ <body>
+     
+<script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyD-9tEzl7wjVSJiMnZPMrcyse3aVv-8KMQ",
+    authDomain: "rebay-for-now.firebaseapp.com",
+    databaseURL: "https://rebay-for-now.firebaseio.com",
+    projectId: "rebay-for-now",
+    storageBucket: "rebay-for-now.appspot.com",
+    messagingSenderId: "235921736126"
+  };
+  firebase.initializeApp(config);
+</script>
+     <script>
+     var storage= firebase.storage();
+var storageRef = firebase.storage().ref();
+var spaceRef = storageRef.child('images/happymegan');
+//var path = spaceRef.fullPath;
+var gsReference = storage.refFromURL('gs://rebay-for-now.appspot.com/buyerpics/ happymegan')
+
+/*storageRef.child('images/happymegan').getDownloadURL().then(function(url) {
+  var test = url;
+  
+document.querySelector('img').src = test;
+}).catch(function(error) {
+
+});*/
+
+gsReference.getDownloadURL().then(function(url) {
+  var test = url;
+  console.log("fuck");
+document.querySelector('img').src = test;
+}).catch(function(error) {
+
+});
+
+  // `url` is the download URL for 'images/stars.jpg'
+
+// Get the download URL
+
+     </script>
+     <img src="test" height="200" width="200"/>
+     
+ </body>
+</html>
