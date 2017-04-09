@@ -44,6 +44,7 @@
     var bnamearray = [];
     var offerarray = [];
     var pnamearray = [];
+    var urlsarray=[];
     var pdesarray = [];
     var categoryarray = [];
 
@@ -51,6 +52,7 @@
     dbRefList.on('value', snap => {
         snap.forEach(function(baby) {
           console.log(baby.val().bName);
+          urlsarray[j]=baby.val().url;
           bnamearray[j] = baby.val().bName;
           offerarray[j] = baby.val().bOffer;
           pnamearray[j] = baby.val().productName;
@@ -88,10 +90,10 @@
                 currentimage.style.height="200px";
                 currentimage.style.width="200px";
         
-             //currentimage.setAttribute("src",urlsarray[i]);
+             currentimage.setAttribute("src",urlsarray[i]);
         
-        //document.getElementById("main").appendChild(div);
-        //div.appendChild(currentimage);
+        document.getElementById("main").appendChild(div);
+        div.appendChild(currentimage);
         div.appendChild(textdiv);
         
         // getting image from database  
@@ -103,7 +105,7 @@
          gsReference.getDownloadURL().then(function(url) {
              console.log(`i from inside promise: ${i}`);
              arrImgUrls[i]= url;
-             //currentimage.setAttribute("src",urlsarray[i]);
+             currentimage.setAttribute("src",urlsarray[i]);
             console.log("!!!!there is no error with image loading.");
             
          });
