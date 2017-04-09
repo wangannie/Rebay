@@ -104,7 +104,9 @@
         image.style.display = "block";
         image.style.borderStyle = "none";
         image.style.padding = "5px";
-        
+        image.onclick=function(){
+          window.open("Bid.html?#"+bnamearray[i],"_self");
+          };
         image.setAttribute("src", arrImgUrls[i]);
         
         document.getElementById("main").appendChild(div);

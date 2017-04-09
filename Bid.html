@@ -20,7 +20,9 @@
 	<br>
 	<br>
 	What are you bidding on?
-	<input type="text" id="name" value="">
+	<select id="productselect">
+		<option value="default">------</option>
+	</select>
 	<br>
 	<br>
 	Your bid amount:
@@ -29,7 +31,7 @@
 	<br>
 	<form action="https://www.google.com">
 	<input type="submit" value="Submit Bid!" />
-
+<input type="submit" value="lol" id="anniesbutton"/>
 </form>
 
 	<script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
@@ -45,43 +47,42 @@
     };
     firebase.initializeApp(config);
     
-    //product key : KhGfZUG8pMwG_eAbsJ4
+    
+    //annies shit
+   anniesbutton.onclick=function(){
+          console.log(window.location.href);
+   };
+    
+    
+    
+        //read data first
+   const dbRefObject = firebase.database().ref();
+    const dbRefList = dbRefObject.child('product');
+
     
     
     //get elements
     var name = document.getElementById("name").value;
     var bid = document.getElementById("bid").value;
     
-    
-    //read data first
-   const dbRefObject = firebase.database().ref();
-    const dbRefList = dbRefObject.child('product');
-
-    // sync object changes
-    // dbRefObject.on('value', snap => {
-    //     preObject.innerText = JSON.stringify(snap.val(), null, 3);
-    // });
-    //preObject.innerText = snap.val().bName;
-    
     var productIDarray = [];
     var i = 0;
-    dbRefObject.on('value', snap => {
+    dbRefList.on('value', snap => {
     	snap.forEach(function(baby) {
     		console.log(baby.val().productID);
-    		productIDarray[i] = baby.val().productID();
-    		
+    		productIDarray[i] = baby.val().productID;
+    		console.log(productIDarray);
     	})
     });
-    
-    
     
     var bnamearray = [];
     var offerarray = [];
     var pnamearray = [];
     var pdesarray = [];
     var categoryarray = [];
+    var productselect = document.getElementById("productselect");
 
-    var i = 0;
+    i = 0;
     dbRefList.on('value', snap => {
         snap.forEach(function(baby) {
         console.log(baby.val().bName);
@@ -92,16 +93,37 @@
         categoryarray[i] = baby.val().productCategory;
         i = i + 1;
     });
+    for (i=0; i < pnamearray.length; i++) {
+    	var newOption = document.createElement("option");
+			newOption.text = 'the options text';
+			newOption.value = 'some value if you want it';
+			productselect.appendChild(newOption);
+    };
     });
+    
+    console.log("hi");
+    //add options
+    
 
-				//write data back
-				function writeUserData(sname, product_interest, price) {
-            firebase.database().ref('buyer').set({
-                name: sname,
-                product_interest: product_interest,
-                price: price
-            });
-        };
+    // sync object changes
+    // dbRefObject.on('value', snap => {
+    //     preObject.innerText = JSON.stringify(snap.val(), null, 3);
+    // });
+    //preObject.innerText = snap.val().bName;
+    
+    
+    
+    
+    
+
+				// //write data back
+				// function writeUserData(sname, product_interest, price) {
+    //         firebase.database().ref('buyer').set({
+    //             name: sname,
+    //             product_interest: product_interest,
+    //             price: price
+    //         });
+    //     };
 
 </script>
   </body>
