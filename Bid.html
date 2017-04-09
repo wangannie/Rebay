@@ -2,7 +2,6 @@
   <head>
 	<meta charset="UTF-8">
 	<title>The web site of pdpdpd</title>
-	<link href="/style.css" rel="stylesheet" type="text/css" media="all">
   </head>
   <body>
     
@@ -67,11 +66,12 @@
     
     var productIDarray = [];
     var i = 0;
-    dbRefList.on('value', snap => {
+    dbRefObject.on('value', snap => {
     	snap.forEach(function(baby) {
-    		console.log(baby.val().productID);
-    		productIDarray[i] = baby.val().productID;
+    		console.log(baby.val());
+    		productIDarray[i] = baby.val();
     		console.log(productIDarray);
+    		i = i + 1;
     	})
     });
     
@@ -85,7 +85,6 @@
     i = 0;
     dbRefList.on('value', snap => {
         snap.forEach(function(baby) {
-        console.log(baby.val().bName);
         bnamearray[i] = baby.val().bName;
         offerarray[i] = baby.val().bOffer;
         pnamearray[i] = baby.val().productName;
@@ -95,7 +94,7 @@
     });
     for (i=0; i < pnamearray.length; i++) {
     	var newOption = document.createElement("option");
-			newOption.text = 'the options text';
+			newOption.text = bnamearray[i];
 			newOption.value = 'some value if you want it';
 			productselect.appendChild(newOption);
     };

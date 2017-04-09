@@ -62,8 +62,9 @@
 
 
     console.log(bnamearray.length);
-    for (i = 0; i < bnamearray.length; i++) {
-      console.log(i);
+    for (i = 0; i < bnamearray.length-1; i++) {
+      
+        console.log("omg i is now : "+ i );
         
         
         var div = document.createElement("div");
@@ -98,6 +99,7 @@
             document.querySelector('img').src = arrImgUrls[i];
           }).catch(function(error) {console.log("wrgntjnejthnrjnhrjhnrdjhn")});
         
+        console.log("bnamearray["+i+"] =  "+ bnamearray[i],"");
         
         var image = document.createElement("img");
         image.style.margin = 0;
@@ -105,6 +107,8 @@
         image.style.borderStyle = "none";
         image.style.padding = "5px";
         image.onclick=function(){
+          console.log("bnamearray["+i+"] =  "+ bnamearray[i],"");
+        
           window.open("Bid.html?#"+bnamearray[i],"_self");
           };
         image.setAttribute("src", arrImgUrls[i]);
