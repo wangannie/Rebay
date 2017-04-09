@@ -5,10 +5,36 @@
 	<link href="/style.css" rel="stylesheet" type="text/css" media="all">
   </head>
   <body>
-    <script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
+    
+	
+	
+	
+	<h3>You're bidding on</h3>
+	<br>
+	Your name:
+	<input type="text" id="name" value="">
+	<br>
+	<br>
+	Your e-mail:
+	<input type="text" id="email" value="">
+	<br>
+	<br>
+	What are you bidding on?
+	<input type="text" id="name" value="">
+	<br>
+	<br>
+	Your bid amount:
+	<input type="number" id="bid" value="0.00">
+	<br>
+	<br>
+	<form action="https://www.google.com">
+	<input type="submit" value="Submit Bid!" />
+
+</form>
+
+	<script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
 <script>
     // Initialize Firebase
-    var wantedname='annietest';
     var config = {
         apiKey: "AIzaSyD-9tEzl7wjVSJiMnZPMrcyse3aVv-8KMQ",
         authDomain: "rebay-for-now.firebaseapp.com",
@@ -19,10 +45,37 @@
     };
     firebase.initializeApp(config);
     
-    const dbRefObject = firebase.database().ref();
-    const dbRefList = dbRefObject.child('product');
+    //product key : KhGfZUG8pMwG_eAbsJ4
     
-     var bnamearray = [];
+    
+    //get elements
+    var name = document.getElementById("name").value;
+    var bid = document.getElementById("bid").value;
+    
+    
+    //read data first
+   const dbRefObject = firebase.database().ref();
+    const dbRefList = dbRefObject.child('product');
+
+    // sync object changes
+    // dbRefObject.on('value', snap => {
+    //     preObject.innerText = JSON.stringify(snap.val(), null, 3);
+    // });
+    //preObject.innerText = snap.val().bName;
+    
+    var productIDarray = [];
+    var i = 0;
+    dbRefObject.on('value', snap => {
+    	snap.forEach(function(baby) {
+    		console.log(baby.val().productID);
+    		productIDarray[i] = baby.val().productID();
+    		
+    	})
+    });
+    
+    
+    
+    var bnamearray = [];
     var offerarray = [];
     var pnamearray = [];
     var pdesarray = [];
@@ -39,33 +92,17 @@
         categoryarray[i] = baby.val().productCategory;
         i = i + 1;
     });
-   
-    
-});
+    });
 
+				//write data back
+				function writeUserData(sname, product_interest, price) {
+            firebase.database().ref('buyer').set({
+                name: sname,
+                product_interest: product_interest,
+                price: price
+            });
+        };
 
 </script>
-	
-	
-	
-	<h3>You're bidding on</h3>
-	<br>
-	Your name:
-	<input type="text" name="name" value="">
-	<br>
-	<br>
-	Your e-mail:
-	<input type="text" name="email" value="">
-	<br>
-	<br>
-	Your bid amount:
-	<input type="number" name="bid" value="0.00">
-	<br>
-	<br>
-	<form action="https://www.google.com">
-	<input type="submit" value="Submit Bid!" />
-
-</form>
-	
   </body>
 </html>

@@ -64,11 +64,12 @@
     console.log(bnamearray.length);
     for (i = 0; i < bnamearray.length; i++) {
       console.log(i);
+        
+        
         var div = document.createElement("div");
 
         div.style.width = "100%";
         div.style.color = "black";
-        div.setAttribute("id", i);
         
         var textdiv = document.createElement("div");
         textdiv.style.display = "block";
@@ -76,8 +77,8 @@
         textdiv.style.color = "black";
         textdiv.style.margin = 0;
         textdiv.style.borderStyle = "none";
-        textdiv.style.padding = "5px"
-        textdiv.innerHTML = `<a href="options.html" onclick='transferInfoToPage()'>Product: ${pnamearray[i]}</a>
+        textdiv.style.padding = "5px";
+        textdiv.innerHTML = `Product: ${pnamearray[i]}
                 <br>Description: ${pdesarray[i]}
                 <br>Maximum price: $${offerarray[i]}
                 <br>Category: ${categoryarray[i]}
@@ -90,7 +91,7 @@
         var spaceRef = storageRef.child('images/happymegan');
         console.log(i);
         var gsReference = storage.refFromURL('gs://rebay-for-now.appspot.com/buyerpics/'+bnamearray[i]);
-        console.log(i)
+        console.log(i);
         gsReference.getDownloadURL().then(function(url) {
           console.log("hiiiiiiiii");
             arrImgUrls[i]= url;
@@ -109,15 +110,7 @@
         document.getElementById("main").appendChild(div);
         div.appendChild(textdiv);
         div.appendChild(image);
-        
-        var id = document.getElementById(i).id;
-		    sessionStorage.setItem("sent", id); 
     
-        function transferInfoToPage () {
-          var id = document.getElementById("id").id;
-          sessionStorage.setItem("id", id); 
-          console.log(id);
-        }
     };
     });
           

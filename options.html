@@ -9,26 +9,7 @@
 	Maximum price: <input type="number" id="maxprice" /><br>
 	Lowest bid: <input type="number" id="lowestbid" /><br>
 	<button id="bid">Bid on this!</button>
-	<FORM NAME="joe">
-<INPUT TYPE="hidden" NAME="burns">
-</FORM>
 
-<SCRIPT LANGUAGE="javascript">
-
-var locate = window.location
-document.joe.burns.value = locate
-
-var text = document.joe.burns.value
-
-function delineate(str)
-{
-theleft = str.indexOf("=") + 1;
-theright = str.lastIndexOf("&");
-return(str.substring(theleft, theright));
-}
-document.write("First Name is " +delineate(text));
-
-</SCRIPT> 
 	<script>
 		var config = {
         apiKey: "AIzaSyD-9tEzl7wjVSJiMnZPMrcyse3aVv-8KMQ",
@@ -39,6 +20,17 @@ document.write("First Name is " +delineate(text));
         messagingSenderId: "235921736126"
     };
     firebase.initializeApp(config);
+
+		$(document).ready(function(){
+    //This sessionStorage.getItem(); is also a predefined function in javascript
+    //will retrieve session and get the value;
+    var a = sessionStorage.getItem("sent");
+    alert(a);
+});    
+
+
+
+
 
     //ref
     const dbRefObject = firebase.database().ref();
