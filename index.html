@@ -3,16 +3,42 @@
  <head>
    <meta charset="UTF-8">
    <title>Rebay</title>
-   <link href="/style.css" rel="stylesheet" type="text/css" media="all">
  </head>
  <body>
+ 
+ <script>
+    var x = document.getElementById("buyer");
+    x.onclick= function(){
+        console.log(window.location.href);
+    };
+    
+ </script>
+ 
    <h1>Welcome to Rebay!</h1>
    <h2>Would you like to be a Buyer or Seller?</h2>
-   <form action="buyers.html">
-   <input type="submit" value="Buyer" />
+   <form action="buyers.html" 
+   >
+   
+   
+   <input type="submit" value="Buyer" id="buyer" />
    </form>
+   
+   
    <form action="sellers.html">
-   <input type="submit" value="Seller" />
+   <input type="submit" value="Seller" id="seller" />
+   </form>
+   
+   
+   <form action="emailtest.html">
+   <input type="submit" value="Annie testing email" />
+   </form>
+   
+   <form action="anniesbuyers.html">
+   <input type="submit" value="Annie Buyer" />
+   </form>
+   
+   <form action="Description.html">
+   <input type="submit" value="Description Test" />
    </form>
  </body>
 </html>
