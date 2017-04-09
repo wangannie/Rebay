@@ -43,7 +43,7 @@
            <option value="Men's Accessories">Men's Accessories</option>
         </select>
         <p></p>
-        <progress value="0" max= "100"id="uploader"></progress>
+        <!--<progress value="0" max= "100"id="uploader"></progress>-->
       <input type="file" value="upload" id="fileButton"/>
       <p></p>
         <button id="postings">Post</button>
@@ -75,7 +75,7 @@
                 sName: sName,
                 sOffer: sOffer,
                 sold: sold
-            }
+            };
 
            // Get a key for a new Post.
             var newPostKey = firebase.database().ref().child('product').push().key;
@@ -96,16 +96,16 @@
             var money = document.getElementById('money').value;
             var category = document.getElementById('category').value;
             var description = document.getElementById('description').value;
-            console.log(description);
             writeNewProduct(name, money, category, product, description, 'na', 'na', 'na');
-             var storageRef= firebase.storage().ref('buyerpics/'+name.trim());
-            //put file
+            var storageRef= firebase.storage().ref('buyerpics/'+name.trim());
+            // put file
             var task = storageRef.put(file);
             
             window.open("Postings.html","_self");
         };
-         fileButton.addEventListener('change',function(e){
-        file = e.target.files[0];
+        var fileButton = document.getElementById("fileButton");
+        fileButton.addEventListener('change',function(e){
+            file = e.target.files[0];
         });
       </script>
   </body>

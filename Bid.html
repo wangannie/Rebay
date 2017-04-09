@@ -8,7 +8,7 @@
 	
 	
 	
-	<h3>You're bidding on</h3>
+	<h3>You're bidding on...</h3>
 	<br>
 	Your name:
 	<input type="text" id="name" value="">
@@ -20,17 +20,20 @@
 	<br>
 	What are you bidding on?
 	<select id="productselect">
-		<option value="default">------</option>
 	</select>
 	<br>
 	<br>
 	Your bid amount:
 	<input type="number" id="bid" value="0.00">
+	<br><br>
+	Lowest current bid:
+	<input type="text" disabled id="lowest" value="0.00">
+	<br><br>
+	Maximum bid amount:
+	<input type="number" disabled id="max" value="0.00">
 	<br>
 	<br>
-	<form action="https://www.google.com">
-	<input type="submit" value="Submit Bid!" />
-<input type="submit" value="lol" id="anniesbutton"/>
+	<input type="button" id="submit" value="Submit Bid!" />
 </form>
 
 	<script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
@@ -44,13 +47,15 @@
         storageBucket: "rebay-for-now.appspot.com",
         messagingSenderId: "235921736126"
     };
+    
     firebase.initializeApp(config);
     
     
-    //annies shit
-   anniesbutton.onclick=function(){
-          console.log(window.location.href);
-   };
+//     //annies shit
+//   anniesbutton.onclick=function(){
+//           console.log(window.location.href.substring(38));
+//   };
+    
     
     
     
@@ -68,39 +73,89 @@
     var i = 0;
     dbRefObject.on('value', snap => {
     	snap.forEach(function(baby) {
-    		console.log(baby.val());
-    		productIDarray[i] = baby.val();
-    		console.log(productIDarray);
+    		productIDarray[i] = Object.keys(baby.val());
+    		console.log(Object.keys(baby.val()));
     		i = i + 1;
-    	})
+    	});
+        
+        var bnamearray = [];
+        var offerarray = [];
+        var pnamearray = [];
+        var pdesarray = [];
+        var categoryarray = [];
+        var bidarray = [];
+        var productselect = document.getElementById("productselect");
+    
+        var keyarray = [];    
+        i = 0;
+        dbRefList.on('value', snap => {
+            snap.forEach(function(baby) {
+                bnamearray[i] = baby.val().bName;
+                offerarray[i] = baby.val().bOffer;
+                pnamearray[i] = baby.val().productName;
+                pdesarray[i] = baby.val().productDescription;
+                categoryarray[i] = baby.val().productCategory;
+                bidarray[i] = baby.val().sOffer;
+                if (bidarray[i]  == isNaN) {
+                    bidarray[i] = 0;
+                }
+                
+                keyarray[i] = baby.key;
+                
+                i = i + 1;
+            });
+            
+            
+        for (i=0; i < pnamearray.length; i++) {
+        	var newOption = document.createElement("option");
+    			newOption.text = pnamearray[i];
+    			newOption.value = productIDarray[i];
+    			productselect.appendChild(newOption);
+        }
+        productselect.onchange = function () {
+            var selected = productselect.selectedIndex;
+            if (bidarray[selected]  == isNaN) {
+                    bidarray[selected] == 0;
+                }
+            document.getElementById("max").value = offerarray[selected];
+            document.getElementById("lowest").value = bidarray[selected];
+        };
+        
+        var submit = document.getElementById("submit");
+        submit.onclick = function () {
+            var name = document.getElementById("name").value;
+            var bid = document.getElementById("bid").value;
+            var selected = productselect.selectedIndex;
+            
+            if (offerarray[selected] < bid) {
+                alert("Your bid was too high!");
+                window.open("Bid.html","_self");
+            }
+            else if (bid >= bidarray[selected]) {
+                alert("Someone else has placed a bid lower than you!");
+                window.open("Bid.html","_self");
+            }
+            else {
+            
+            console.log(productIDarray);
+                var PostKey = keyarray[selected];
+                var updates = {};
+                console.log(PostKey);
+                updates['/product/' + PostKey] = {"sName":name, "sOffer":bid, "bName":bnamearray[selected], "bOffer":offerarray[selected], "productCategory":categoryarray[selected], "productDescription":pdesarray[selected], "sold":"na", "productName":pnamearray[selected]};
+                dbRefObject.update(updates);
+                
+                alert("Nice job!");
+                window.open("index.html","_self");
+            };
+                // var seller = dbRefObject.child(productIDarray[i]);
+                // seller.once('value', function(snapshot) {
+                //     snapshot.ref().update({"sName": name});
+                //     //snapshot.ref().update({"sOffer": bid});
+                // });
+            };
+        });
     });
     
-    var bnamearray = [];
-    var offerarray = [];
-    var pnamearray = [];
-    var pdesarray = [];
-    var categoryarray = [];
-    var productselect = document.getElementById("productselect");
-
-    i = 0;
-    dbRefList.on('value', snap => {
-        snap.forEach(function(baby) {
-        bnamearray[i] = baby.val().bName;
-        offerarray[i] = baby.val().bOffer;
-        pnamearray[i] = baby.val().productName;
-        pdesarray[i] = baby.val().productDescription;
-        categoryarray[i] = baby.val().productCategory;
-        i = i + 1;
-    });
-    for (i=0; i < pnamearray.length; i++) {
-    	var newOption = document.createElement("option");
-			newOption.text = bnamearray[i];
-			newOption.value = 'some value if you want it';
-			productselect.appendChild(newOption);
-    };
-    });
-    
-    console.log("hi");
     //add options
     
 
@@ -108,9 +163,7 @@
     // dbRefObject.on('value', snap => {
     //     preObject.innerText = JSON.stringify(snap.val(), null, 3);
     // });
-    //preObject.innerText = snap.val().bName;
-    
-    
+    // preObject.innerText = snap.val().bName;
     
     
     
